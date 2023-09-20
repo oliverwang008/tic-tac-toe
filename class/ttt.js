@@ -12,7 +12,6 @@ class TTT {
                  [' ',' ',' ']]
 
     this.cursor = new Cursor(3, 3);
-    this.preMove = 'O';
 
     // Initialize a 3x3 tic-tac-toe grid
     Screen.initialize(3, 3);
@@ -33,15 +32,15 @@ class TTT {
     let r = this.cursor.row;
     let c = this.cursor.col;
     if (this.grid[r][c] === ' ') {
-      if (this.preMove === 'O') {
-        this.grid[r][c] = 'X';
-        this.preMove = 'X';
-        Screen.setGrid(r, c, 'X');
+      if (this.playerTurn === 'O') {
+        this.grid[r][c] = 'O';
+        this.playerTurn = 'X';
+        Screen.setGrid(r, c, 'O');
         Screen.render();
       } else {
-        this.grid[r][c] = 'O';
-        this.preMove = 'O'
-        Screen.setGrid(r, c, 'O');
+        this.grid[r][c] = 'X';
+        this.playerTurn = 'O'
+        Screen.setGrid(r, c, 'X');
         Screen.render();
       }
     }
