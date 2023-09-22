@@ -22,6 +22,8 @@ class Screen {
 
   static commands = {};
 
+  static keypressCallback = null;
+
   static initialized = false;
 
   static initialize(numRows, numCols) {
@@ -221,6 +223,9 @@ class Screen {
     Screen.message = msg;
   }
 
+  static setKeypressCallback (keypressCallback) {
+    Screen.keypressCallback = keypressCallback;
+  }
 }
 
 module.exports = Screen;

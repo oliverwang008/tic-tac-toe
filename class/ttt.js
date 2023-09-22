@@ -1,5 +1,6 @@
 const Screen = require("./screen");
 const Cursor = require("./cursor");
+const ComputerPlayer = require("./computer-player");
 
 class TTT {
 
@@ -16,6 +17,7 @@ class TTT {
     // Initialize a 3x3 tic-tac-toe grid
     Screen.initialize(3, 3);
     Screen.setGridlines(true);
+
     Screen.setBackgroundColor(0, 0, 'yellow');
 
 
@@ -28,7 +30,7 @@ class TTT {
     Screen.render();
   }
 
-  placeMove(){
+  placeMove() {
     let r = this.cursor.row;
     let c = this.cursor.col;
     if (this.grid[r][c] === ' ') {
@@ -44,16 +46,35 @@ class TTT {
         Screen.render();
       }
     }
-    let winner = TTT.checkWin(this.grid);
+    let winner = ComputerPlayer.checkWin(this.grid);
     if (winner) {
       TTT.endGame(winner);
+    } else {
+      if (this.playerTurn === 'O') {
+        console.log('O');
+        let smartMove = ComputerPlayer.getSmartMove(this.grid, 'O');
+        this.grid[smartMove.row][smartMove.col] = 'O'
+        this.playerTurn = 'X';
+        Screen.setGrid(smartMove.row, smartMove.col, 'O');
+        Screen.render();
+      } else {
+        console.log('X');
+        let smartMove = ComputerPlayer.getSmartMove(this.grid, 'X');
+        this.grid[smartMove.row][smartMove.col] = 'X'
+        this.playerTurn = 'O';
+        Screen.setGrid(smartMove.row, smartMove.col, 'X');
+        Screen.render();
+      }
+      winner = ComputerPlayer.checkWin(this.grid);
+      if (winner) {
+        TTT.endGame(winner);
+      }
     }
-    
+
   };
 
-
-
   static checkWin(grid) {
+
     // Return 'X' if player X wins
     // Return 'O' if player O wins
     // Return 'T' if the game is a tie
@@ -113,7 +134,6 @@ class TTT {
     Screen.render();
     Screen.quit();
   }
-
 
 }
 
